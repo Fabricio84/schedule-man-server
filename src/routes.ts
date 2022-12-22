@@ -1,5 +1,4 @@
 import express from 'express';
-import { celebrate, Joi } from 'celebrate';
 
 import AuthController from './controllers/AuthController';
 import CustomerController from './controllers/CustomerController';
