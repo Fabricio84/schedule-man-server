@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @default(uuid())
+  email    String
+  password String
+  role     String    @default("customer")
+  customer Customer?
+
+  @@map("users")
+}
+
+model Customer {
+  id        String      @id @default(uuid())
+  name      String
+  phone     String?
+  userID    String      @unique
+  user      User        @relation(fields: [userID], references: [id])
+  Schedules Schedules[]
+
+  @@map("customers")
+}
+
+model ServiceType {
+  id          String      @id @default(uuid())
+  description String
+  value       Decimal
+  duration    Int
+  Schedules   Schedules[]
+
+  @@map("service-types")
+}
+
+model Schedules {
+  id              String      @id @default(uuid())
+  start           DateTime
+  end             DateTime
+  serviceTypeID   String
+  customerID      String
+  confirmation_at DateTime?
+  canceled_at     DateTime?
+  customer        Customer    @relation(fields: [customerID], references: [id])
+  serviceType     ServiceType @relation(fields: [serviceTypeID], references: [id])
+
+  @@map("schedules")
+}
+
+model BlockedDate {
+  id    String   @id @default(uuid())
+  start DateTime
+  end   DateTime
+
+  @@map("blocked-dates")
+}
