@@ -11,6 +11,9 @@
   "keywords": [
     "schedule"
   ],
+  "engines": {
+    "node": "14.20.1"
+  },
   "author": "fabricio.abner@gmail.com",
   "license": "ISC",
   "devDependencies": {
